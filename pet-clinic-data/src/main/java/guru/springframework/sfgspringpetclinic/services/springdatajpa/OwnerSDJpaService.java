@@ -1,9 +1,10 @@
-package guru.springframework.sfgspringpetclinic.services;
+package guru.springframework.sfgspringpetclinic.services.springdatajpa;
 
 import guru.springframework.sfgspringpetclinic.model.Owner;
 import guru.springframework.sfgspringpetclinic.repositories.OwnerRepository;
 import guru.springframework.sfgspringpetclinic.repositories.PetRepository;
 import guru.springframework.sfgspringpetclinic.repositories.PetTypeRepository;
+import guru.springframework.sfgspringpetclinic.services.OwnerService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
