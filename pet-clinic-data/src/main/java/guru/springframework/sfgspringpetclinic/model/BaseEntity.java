@@ -22,4 +22,7 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    //use box type: 1. recommended for Hibernate.   2. value can be null.
 
+    public boolean isNew() {
+        return this.id == null;
+    }
 }
