@@ -1,6 +1,7 @@
 package guru.springframework.sfgspringpetclinic.services.springdatajpa;
 
 import guru.springframework.sfgspringpetclinic.model.Pet;
+import guru.springframework.sfgspringpetclinic.repositories.OwnerRepository;
 import guru.springframework.sfgspringpetclinic.repositories.PetRepository;
 import guru.springframework.sfgspringpetclinic.services.PetService;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +16,7 @@ public class PetSDJpaService implements PetService {
 
     private final PetRepository petRepository;
 
-    public PetSDJpaService(PetRepository petRepository) {
+    public PetSDJpaService(PetRepository petRepository, OwnerRepository ownerRepository) {
         this.petRepository = petRepository;
     }
 

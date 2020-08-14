@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/owners/{ownerId}")
@@ -53,7 +55,7 @@ public class PetController {
         Pet pet = new Pet();
         owner.getPets().add(pet);
         pet.setOwner(owner);
-//        petService.save(pet);
+
         model.addAttribute("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
@@ -88,8 +90,22 @@ public class PetController {
             model.addAttribute("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         } else {
-            owner.getPets().add(pet);
-            petService.save(pet);
+            pet.setOwner(owner);
+            Set<Pet> pets = ownerService.findById(owner.getId()).getPets();
+            Optional<Pet> petToUpdateOptional = pets.stream().filter(pet1 -> pet1.getId().equals(pet.getId())).findFirst();
+            Pet petToUpdate;
+            if (petToUpdateOptional.isPresent()) {
+                petToUpdate = petToUpdateOptional.get();
+
+                petToUpdate.setName(pet.getName());
+                petToUpdate.setBirthDate(pet.getBirthDate());
+                petToUpdate.setPetType(pet.getPetType());
+                ownerService.save(owner);
+                petService.save(petToUpdate);
+
+                //owner.getPets().add(pet); directly: PersistentObjectException: detached entity passed to persist error
+            }
+
             return "redirect:/owners/" + owner.getId();
         }
     }
